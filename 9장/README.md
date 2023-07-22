@@ -109,8 +109,8 @@ Boolean('x')   // true
 
 논리곱 연산자와 논리합 연산자는 이처럼 **논리 연산의 결과를 결정하는 피연산자를 타입 변환하지 않고 그대로 변환한다. 이를 단축 평가라 한다. 단축 평가는 표현식을 평가하는 도중에 평가 결과가 확정된 경우 나머지 평가 과정을 생략하는 것을 말한다.**
 
-<table align="center" width="400">
-  <tr style="font-weight: bold;" border="1">
+<table align="center" width="400" border>
+  <tr style="font-weight: bold;">
     <td>단축 평가 표현식</td>
     <td>평가 결과</td>
   </tr>
@@ -131,3 +131,40 @@ Boolean('x')   // true
     <td>false</td>
   </tr>
 </table>
+
+**_객체를 가리키기를 기대하는 변수가 null또는 undefined가 아닌지 확인하고 프로퍼티를 참조할 때_**
+
+```
+var elem = null
+var value= elem. value; // Type Error
+```
+
+이때 단축 평가를 사용하면 에러를 발생시키지 않는다.
+
+```
+var elem = null
+var value= elem && elem. value; // null
+```
+
+#### 9.4.2 옵셔널 체이닝 연산자
+
+ES11(ESMAScript2020)에서 도입된 옵셔널 체이닝 연산자 ?.는 좌항의 피연산자가 null 또는 undefined인 경우 undefined를 반환하고, 그렇지 않으면 우항의 포로퍼티 참조를 이어간다.
+
+```
+var elem = null;
+
+var value = elem?.value;
+console.log(value)      // undefined
+```
+
+#### 9.4.3 null 병합 연산자
+
+ES11(ESMAScript2020)에서 도입된 null 병합 연산자 ??는 좌항의 피연산자가 null또는 undefined인 경우 우항의 피연산자를 반환하고, 그렇지 않으면 좌항의 피연산자를 반환한다.  
+null 병합 연산자는 변수에 기본값을 설정할 때 유용하다.
+
+```
+var foo = null ?? 'default string';
+console.log(foo) // 'default string'
+```
+
+하지만 null 병합 연사자는 좌항의 피연산자가 false로 평가되는 Falsy 값이라도 null 또는 undefined가 아니면 좌항의 피연산자를 그대로 반환한다.
